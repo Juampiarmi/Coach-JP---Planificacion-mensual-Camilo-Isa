@@ -157,13 +157,13 @@
   .nav-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
   .nav-logo-icon {
     position: relative;
-    width: 46px;
-    height: 46px;
+    width: 62px;
+    height: 62px;
     background:
       radial-gradient(circle at 30% 22%, rgba(255,255,255,0.16), transparent 40%),
       linear-gradient(155deg, #3a3a3e 0%, #201f22 45%, #0c0c0d 100%);
-    clip-path: polygon(26% 0%, 74% 0%, 100% 50%, 74% 100%, 26% 100%, 0% 50%);
-    border: 2px solid rgba(255,61,0,0.55);
+    clip-path: polygon(18% 0%, 82% 0%, 100% 22%, 100% 78%, 82% 100%, 18% 100%, 0% 78%, 0% 22%);
+    border: 2.5px solid rgba(255,61,0,0.55);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -174,7 +174,7 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.15),
       inset 0 -8px 12px rgba(0, 0, 0, 0.5),
       0 0 0 1px rgba(255, 214, 0, 0.08),
-      0 0 14px rgba(255, 61, 0, 0.2);
+      0 0 22px rgba(255, 61, 0, 0.35);
   }
   .nav-logo-icon::before {
     content: '';
@@ -185,7 +185,11 @@
     transform: rotate(-8deg);
     pointer-events: none;
   }
-  .nav-logo-icon svg { position: relative; width: 23px; height: 23px; z-index: 1; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)); }
+  .nav-logo-icon svg { position: relative; width: 38px; height: 38px; z-index: 1; animation: boltPulse 2.6s ease-in-out infinite; }
+  @keyframes boltPulse {
+    0%, 100% { filter: drop-shadow(0 0 3px rgba(255,61,0,0.55)) drop-shadow(0 1px 2px rgba(0,0,0,0.6)); }
+    50% { filter: drop-shadow(0 0 9px rgba(255,214,0,0.85)) drop-shadow(0 1px 2px rgba(0,0,0,0.6)); }
+  }
   .nav-brand-text {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 900;
@@ -454,14 +458,14 @@
   .cardio-timer.phase-rest .cardio-timer-ring-progress { stroke: var(--fire-glow); }
   .cardio-timer.phase-prepare .cardio-timer-ring-progress { stroke: var(--violet); }
   .cardio-timer.done .cardio-timer-ring-progress { stroke: var(--gold); }
-  .cardio-timer-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
-  .cardio-timer-phase { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 0.95rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light); transition: color 0.3s ease; }
+  .cardio-timer-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 0 18px; box-sizing: border-box; text-align: center; }
+  .cardio-timer-phase { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 0.9rem; line-height: 1.2; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light); transition: color 0.3s ease; }
   .cardio-timer.phase-rest .cardio-timer-phase { color: var(--fire-glow); }
   .cardio-timer.phase-prepare .cardio-timer-phase { color: var(--violet-light); }
   .cardio-timer.done .cardio-timer-phase { color: var(--gold); }
-  .cardio-timer-display { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 2.6rem; color: var(--text-primary); font-variant-numeric: tabular-nums; line-height: 1; }
+  .cardio-timer-display { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 2.4rem; color: var(--text-primary); font-variant-numeric: tabular-nums; line-height: 1; }
   .cardio-timer.done .cardio-timer-display { color: var(--gold); animation: exTimerPulse 0.55s ease 2; }
-  .cardio-timer-rounds { font-size: 12px; color: var(--text-muted); font-weight: 700; letter-spacing: 0.05em; }
+  .cardio-timer-rounds { font-size: 11px; line-height: 1.3; max-width: 100%; word-break: keep-all; color: var(--text-muted); font-weight: 700; letter-spacing: 0.05em; }
   .cardio-timer-controls { display: flex; gap: 10px; }
   .cardio-timer-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-primary); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; transition: all 0.2s ease; }
   .cardio-timer.phase-work.running .cardio-timer-toggle { background: rgba(0,137,123,0.25); border-color: var(--teal); }
@@ -523,8 +527,8 @@
     .nav-brand { gap: 10px; }
     .nav-brand-text { font-size: 1.7rem; }
     .nav-brand-tag { display: none; }
-    .nav-logo-icon { width: 38px; height: 38px; }
-    .nav-logo-icon svg { width: 18px; height: 18px; }
+    .nav-logo-icon { width: 50px; height: 50px; }
+    .nav-logo-icon svg { width: 30px; height: 30px; }
     .nav-right { width: 100%; justify-content: flex-start; }
     .nav-badge { white-space: normal; text-align: left; font-size: 10.5px; line-height: 1.4; padding: 4px 10px; }
     .hero { padding: 1.75rem 1rem 2rem; }
@@ -575,24 +579,16 @@
 <nav>
   <a class="nav-brand" href="#">
     <div class="nav-logo-icon">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
-          <linearGradient id="barGrad1" x1="0" y1="22" x2="0" y2="13" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#FFD600"/>
-            <stop offset="100%" stop-color="#FFF3B0"/>
-          </linearGradient>
-          <linearGradient id="barGrad2" x1="0" y1="22" x2="0" y2="8" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#FFD600"/>
-            <stop offset="100%" stop-color="#FFF6E0"/>
-          </linearGradient>
-          <linearGradient id="barGrad3" x1="0" y1="22" x2="0" y2="3" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#FFD600"/>
-            <stop offset="100%" stop-color="#FFFFFF"/>
+          <linearGradient id="boltGrad" x1="10" y1="2" x2="38" y2="46" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#FFF3B0"/>
+            <stop offset="30%" stop-color="#FFD600"/>
+            <stop offset="65%" stop-color="#FF6D3A"/>
+            <stop offset="100%" stop-color="#FF3D00"/>
           </linearGradient>
         </defs>
-        <rect x="3.4" y="14.2" width="4" height="7.8" rx="1.3" fill="url(#barGrad1)" opacity="0.85"/>
-        <rect x="10" y="9.2" width="4" height="12.8" rx="1.3" fill="url(#barGrad2)"/>
-        <rect x="16.6" y="3.4" width="4" height="18.6" rx="1.3" fill="url(#barGrad3)"/>
+        <path d="M27.5 1.5 L8 27 H19.5 L14 46.5 L40 19 H27 L27.5 1.5 Z" fill="url(#boltGrad)" stroke="#0A0A0B" stroke-width="3" stroke-linejoin="round"/>
       </svg>
     </div>
     <div class="nav-brand-wordmark">
@@ -1319,9 +1315,34 @@ function updateTimerDisplay(el, seconds) {
   const display = el.querySelector('.ex-timer-display');
   if (display) display.textContent = formatTime(seconds);
 }
+let sharedAudioCtx = null;
+let speechUnlocked = false;
+function unlockAudio() {
+  try {
+    if (!sharedAudioCtx) { sharedAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    if (sharedAudioCtx.state === 'suspended') { sharedAudioCtx.resume(); }
+    const osc = sharedAudioCtx.createOscillator();
+    const gain = sharedAudioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(sharedAudioCtx.destination);
+    gain.gain.setValueAtTime(0.0001, sharedAudioCtx.currentTime);
+    osc.start();
+    osc.stop(sharedAudioCtx.currentTime + 0.02);
+  } catch (e) {}
+  try {
+    if ('speechSynthesis' in window && !speechUnlocked) {
+      const u = new SpeechSynthesisUtterance(' ');
+      u.volume = 0;
+      window.speechSynthesis.speak(u);
+      speechUnlocked = true;
+    }
+  } catch (e) {}
+}
 function playTimerBeep() {
   try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (!sharedAudioCtx) { sharedAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    if (sharedAudioCtx.state === 'suspended') { sharedAudioCtx.resume(); }
+    const ctx = sharedAudioCtx;
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.connect(gain);
@@ -1331,7 +1352,6 @@ function playTimerBeep() {
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
     osc.start();
     osc.stop(ctx.currentTime + 0.4);
-    osc.onended = () => ctx.close();
   } catch (e) { /* noop */ }
 }
 async function startExTimer(el) {
@@ -1450,7 +1470,7 @@ function updateCardioDisplay(el) {
   const roundsLabel = el.querySelector('.cardio-timer-rounds');
   if (phaseLabel) phaseLabel.textContent = phase === 'work' ? 'Trabajo' : (phase === 'rest' ? 'Descanso' : 'Preparate');
   if (display) display.textContent = formatTime(remaining);
-  if (roundsLabel) roundsLabel.textContent = phase === 'prepare' ? `Arranca Ronda 1 / ${roundsMax}` : `Ronda ${round} / ${roundsMax}`;
+  if (roundsLabel) roundsLabel.textContent = phase === 'prepare' ? `Ronda 1 / ${roundsMax}` : `Ronda ${round} / ${roundsMax}`;
   el.classList.toggle('phase-work', phase === 'work');
   el.classList.toggle('phase-rest', phase === 'rest');
   el.classList.toggle('phase-prepare', phase === 'prepare');
@@ -1546,7 +1566,7 @@ function renderCardioTimer(c) {
         <div class="cardio-timer-center">
           <div class="cardio-timer-phase">Preparate</div>
           <div class="cardio-timer-display">${formatTime(CARDIO_PREPARE_SECONDS)}</div>
-          <div class="cardio-timer-rounds">Arranca Ronda 1 / ${c.roundsMax}</div>
+          <div class="cardio-timer-rounds">Ronda 1 / ${c.roundsMax}</div>
         </div>
       </div>
       <div class="cardio-timer-controls">
@@ -1583,12 +1603,14 @@ document.getElementById('modal-exercises-content').addEventListener('click', (e)
   const cardioResetBtn = e.target.closest('.cardio-timer-reset');
   const setBtn = e.target.closest('.set-check');
   if (toggleBtn) {
+    unlockAudio();
     e.stopPropagation();
     toggleExTimer(toggleBtn.closest('.ex-timer'));
   } else if (resetBtn) {
     e.stopPropagation();
     resetExTimer(resetBtn.closest('.ex-timer'));
   } else if (cardioToggleBtn) {
+    unlockAudio();
     e.stopPropagation();
     toggleCardioTimer(cardioToggleBtn.closest('.cardio-timer'));
   } else if (cardioResetBtn) {
