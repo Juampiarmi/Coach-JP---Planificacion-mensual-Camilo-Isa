@@ -19,14 +19,20 @@
     --bg-card-hover: #1A1A1E;
     --bg-filter: #0F0F11;
     --text-primary: #F5F5F7;
-    --text-secondary: #A0A0AA;
-    --text-muted: #52525B;
+    --text-secondary: #B7B7C2;
+    --text-muted: #6B6B76;
     --border: rgba(255, 255, 255, 0.06);
     --border-active: rgba(255, 61, 0, 0.4);
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
     --radius-xl: 24px;
+    /* Steel Vault & Raw Chalk — vidrio esmerilado industrial */
+    --glass-bg: rgba(20, 20, 23, 0.62);
+    --glass-bg-hover: rgba(26, 26, 30, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.09);
+    --glass-bevel: inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.4);
+    --oly-blue: #2F8FE0;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -45,9 +51,12 @@
     -webkit-font-smoothing: antialiased;
   }
   /* ============================================================
-     FONDO AMBIENTE — capas abstractas (sin texto) que sugieren
-     construcción de fuerza / fibra muscular / progresión ascendente.
-     Fijas detrás de todo el contenido, con leve parallax al navegar.
+     FONDO CINEMÁTICO "STEEL VAULT & RAW CHALK" — box de Heavy Duty /
+     CrossFit profesional en 3 capas reales (nada de figuras abstractas):
+     1) pared de concreto/acero oxidado con chiaroscuro + vignette
+     2) plancha de acero diamantado + rejilla de rack/cage de potencia
+     3) partículas de tiza/magnesio suspendidas en el aire
+     Fijas detrás de todo el contenido, con parallax real al scrollear.
      ============================================================ */
   .bg-ambient {
     position: fixed;
@@ -62,82 +71,66 @@
     will-change: transform;
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .bg-blob {
+  /* CAPA 1 — Base: pared de concreto/acero industrial oxidado,
+     iluminación de claroscuro (chiaroscuro) + vignette en los bordes. */
+  .bg-steel-wall {
+    position: absolute;
+    inset: -5% -5%;
+    width: 110%;
+    height: 110%;
+    background:
+      radial-gradient(ellipse 70% 55% at 22% 10%, rgba(255,255,255,0.05), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 84% 90%, rgba(255,109,58,0.06), transparent 62%),
+      linear-gradient(155deg, #18140f 0%, #100d0a 38%, #0a0a0b 70%, #050506 100%);
+  }
+  .bg-steel-wall::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 240px 150px at 12% 28%, rgba(150,78,30,0.11), transparent 70%),
+      radial-gradient(ellipse 280px 180px at 86% 60%, rgba(130,65,22,0.09), transparent 72%),
+      radial-gradient(ellipse 190px 270px at 55% 94%, rgba(95,48,16,0.08), transparent 70%),
+      radial-gradient(ellipse 160px 120px at 70% 8%, rgba(140,70,25,0.07), transparent 72%);
+    mix-blend-mode: overlay;
+  }
+  .bg-steel-wall::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 78% 68% at 50% 40%, transparent 42%, rgba(0,0,0,0.6) 100%);
+  }
+  /* CAPA 2 — Estructura: plancha de acero diamantada (baja opacidad)
+     + rejilla de rack/cage de potencia (ver SVG inline). */
+  .bg-diamond-plate {
+    position: absolute;
+    inset: -5% -5%;
+    width: 110%;
+    height: 110%;
+    opacity: 0.5;
+  }
+  /* CAPA 3 — Partículas: tiza/magnesio suspendida en el aire,
+     con drift ascendente continuo + parallax de scroll (capa padre). */
+  .bg-chalk-particles {
+    position: absolute;
+    inset: -10% -5%;
+    width: 110%;
+    height: 125%;
+    opacity: 0.6;
+  }
+  .chalk-dust {
     position: absolute;
     border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.5;
-    will-change: transform;
-    animation: bgBlobDrift 26s ease-in-out infinite;
+    background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(255,255,255,0) 72%);
+    animation-name: chalkFloat;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
   }
-  .bg-blob-fire {
-    top: -12%;
-    left: -8%;
-    width: 46vw;
-    height: 46vw;
-    background: radial-gradient(circle, rgba(255,61,0,0.16), transparent 70%);
-    animation-duration: 24s;
-  }
-  .bg-blob-gold {
-    top: 8%;
-    right: -12%;
-    width: 38vw;
-    height: 38vw;
-    background: radial-gradient(circle, rgba(255,214,0,0.10), transparent 70%);
-    animation-duration: 30s;
-    animation-delay: -6s;
-  }
-  .bg-blob-violet {
-    bottom: 2%;
-    left: 6%;
-    width: 42vw;
-    height: 42vw;
-    background: radial-gradient(circle, rgba(124,77,255,0.12), transparent 70%);
-    animation-duration: 34s;
-    animation-delay: -12s;
-  }
-  .bg-blob-teal {
-    bottom: -14%;
-    right: -6%;
-    width: 40vw;
-    height: 40vw;
-    background: radial-gradient(circle, rgba(0,137,123,0.11), transparent 70%);
-    animation-duration: 28s;
-    animation-delay: -18s;
-  }
-  @keyframes bgBlobDrift {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(3%, -4%) scale(1.06); }
-    66% { transform: translate(-4%, 3%) scale(0.97); }
-  }
-  .bg-fibers {
-    position: absolute;
-    inset: -5% -5%;
-    width: 110%;
-    height: 110%;
-    opacity: 0.05;
-  }
-  .bg-fiber-path {
-    fill: none;
-    stroke-width: 2.2;
-    stroke-linecap: round;
-    animation: bgFiberFlow 3.2s linear infinite alternate;
-  }
-  .bg-fiber-path:nth-child(1) { animation-duration: 3.4s; }
-  .bg-fiber-path:nth-child(2) { animation-duration: 4.1s; animation-delay: -1s; }
-  .bg-fiber-path:nth-child(3) { animation-duration: 3.8s; animation-delay: -2s; }
-  .bg-fiber-path:nth-child(4) { animation-duration: 4.4s; animation-delay: -0.6s; }
-  .bg-fiber-path:nth-child(5) { animation-duration: 3.6s; animation-delay: -1.6s; }
-  @keyframes bgFiberFlow {
-    0% { stroke-width: 1.6; opacity: 0.7; }
-    100% { stroke-width: 2.6; opacity: 1; }
-  }
-  .bg-gym-gear {
-    position: absolute;
-    inset: -5% -5%;
-    width: 110%;
-    height: 110%;
-    opacity: 0.22;
+  @keyframes chalkFloat {
+    0% { transform: translate(0, 0); opacity: 0; }
+    10% { opacity: var(--dust-op, 0.5); }
+    90% { opacity: var(--dust-op, 0.5); }
+    100% { transform: translate(var(--drift-x, 20px), var(--drift-y, -220px)); opacity: 0; }
   }
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
@@ -187,7 +180,55 @@
   .sticky-bar .nav-logo-icon { width: 42px; height: 42px; border-width: 2px; }
   .sticky-bar .nav-logo-icon svg { width: 26px; height: 26px; }
   .sticky-bar-text { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.55rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-primary); white-space: nowrap; }
-  .sticky-bar-text span { color: var(--fire); }
+  /* ============================================================
+     "JP" — ELECTRICIDAD ESTÁTICA / ALTA TENSIÓN
+     Flicker de neón (fire + gold + electric cyan) con arcos de
+     descarga en los bordes; en hover, sobrecarga de voltaje
+     (la frecuencia del flicker se acelera).
+     ============================================================ */
+  .nav-brand-text span, .sticky-bar-text span {
+    position: relative;
+    display: inline-block;
+    color: var(--gold);
+    animation: jpElectricFlicker 2.8s infinite;
+  }
+  .nav-brand-text span::before, .nav-brand-text span::after,
+  .sticky-bar-text span::before, .sticky-bar-text span::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    width: 3px;
+    height: 12px;
+    background: linear-gradient(180deg, #00BFA5, #FFD600 55%, #FF3D00);
+    clip-path: polygon(50% 0%, 100% 35%, 55% 42%, 100% 100%, 0% 62%, 45% 52%);
+    filter: drop-shadow(0 0 5px rgba(0,191,165,0.85)) drop-shadow(0 0 8px rgba(255,214,0,0.6));
+    opacity: 0;
+    animation: jpArc 2.8s infinite;
+  }
+  .nav-brand-text span::before, .sticky-bar-text span::before { top: -8px; left: 6%; animation-delay: 0.15s; }
+  .nav-brand-text span::after, .sticky-bar-text span::after { bottom: -8px; right: 8%; transform: rotate(180deg); animation-delay: 1.55s; }
+  @keyframes jpElectricFlicker {
+    0%, 3%, 8%, 31%, 36%, 69%, 74%, 100% {
+      color: var(--gold);
+      text-shadow: 0 0 4px rgba(255,214,0,0.85), 0 0 10px rgba(255,61,0,0.55), 0 0 18px rgba(0,191,165,0.32);
+    }
+    4%, 34%, 72% {
+      color: #fff;
+      text-shadow: 0 1px 2px #fff, 0 0 16px rgba(0,191,165,0.95), 0 0 28px rgba(255,214,0,0.85), 0 0 40px rgba(255,61,0,0.5);
+    }
+    6% { color: var(--fire-glow); text-shadow: 0 0 5px rgba(255,109,58,0.75), 0 0 12px rgba(255,61,0,0.5); }
+  }
+  @keyframes jpArc {
+    0%, 90%, 100% { opacity: 0; transform: scaleY(0.6); }
+    91% { opacity: 0.9; transform: scaleY(1); }
+    93% { opacity: 0; transform: scaleY(0.75); }
+    95% { opacity: 0.7; transform: scaleY(1.08); }
+    97% { opacity: 0; }
+  }
+  .nav-brand:hover .nav-brand-text span,
+  .sticky-bar-brand:hover .sticky-bar-text span { animation-duration: 0.45s; }
+  .nav-brand:hover .nav-brand-text span::before, .nav-brand:hover .nav-brand-text span::after,
+  .sticky-bar-brand:hover .sticky-bar-text span::before, .sticky-bar-brand:hover .sticky-bar-text span::after { animation-duration: 0.4s; }
   .nav-brand { display: flex; align-items: center; gap: 20px; text-decoration: none; }
   .nav-logo-icon {
     position: relative;
@@ -234,7 +275,6 @@
     text-transform: uppercase;
     text-shadow: 0 2px 0 rgba(0,0,0,0.55), 0 -1px 0 rgba(255,255,255,0.06);
   }
-  .nav-brand-text span { color: var(--fire); }
   .nav-brand-wordmark { display: flex; flex-direction: column; line-height: 1; }
   .nav-brand-tag { display: flex; align-items: center; gap: 5px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fire-glow); margin-top: 7px; }
   .nav-brand-tag::before, .nav-brand-tag::after { content: ''; display: inline-block; width: 16px; height: 1px; background: rgba(255,109,58,0.5); }
@@ -338,20 +378,35 @@
   .grid-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 4rem; }
   .grid-meta { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
-  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: transform 0.32s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease, box-shadow 0.4s ease, background 0.3s ease; display: flex; flex-direction: column; }
+  /* Heavy Duty Industrial Glassmorphism: vidrio esmerilado oscuro +
+     bisel metálico tenue + sombra de profundidad pesada. */
+  .card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.32s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease, box-shadow 0.4s ease, background 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--glass-bevel), 0 14px 30px -14px rgba(0,0,0,0.65);
+  }
   .card:hover, .card:focus-visible {
     transform: translateY(-5px);
-    border-color: rgba(255,61,0,0.35);
-    background: var(--bg-card-hover);
+    border-color: rgba(255,61,0,0.4);
+    background: var(--glass-bg-hover);
     box-shadow:
-      0 0 0 1px rgba(255,61,0,0.1),
-      0 0 44px -6px rgba(255,61,0,0.28),
-      0 24px 44px -16px rgba(0,0,0,0.6),
-      0 10px 18px rgba(0,0,0,0.32);
+      var(--glass-bevel),
+      0 0 0 1px rgba(255,61,0,0.12),
+      0 0 44px -6px rgba(255,61,0,0.3),
+      0 24px 44px -16px rgba(0,0,0,0.65),
+      0 10px 18px rgba(0,0,0,0.35);
   }
   .card.completed { opacity: 0.5; }
   .card.completed .card-desc, .card.completed h2 { opacity: 0.7; }
-  .card-accent { height: 4px; width: 100%; background: linear-gradient(90deg, var(--fire), var(--gold)); flex-shrink: 0; }
+  .card-accent { height: 4px; width: 100%; background: linear-gradient(90deg, var(--fire), var(--gold)); flex-shrink: 0; box-shadow: 0 1px 0 rgba(255,255,255,0.25) inset; }
   .card-body { padding: 1.5rem; flex: 1; pointer-events: none; }
   .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
   .tag { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }
@@ -430,24 +485,90 @@
     flex-shrink: 0;
   }
   .modal-close:hover { background: rgba(255,255,255,0.1); color: var(--text-primary); }
+  .modal-header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  /* Badge "Pantalla Activa" — confirma que el WakeLock sostiene la
+     pantalla encendida mientras corre un timer/cronómetro. */
+  .wakelock-badge {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    background: rgba(0,137,123,0.12);
+    border: 1px solid rgba(0,137,123,0.35);
+    padding: 5px 11px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .wakelock-badge.is-active { display: inline-flex; }
+  .wakelock-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--teal-light);
+    box-shadow: 0 0 6px 1px rgba(77,182,172,0.8);
+    animation: wakelockPulse 1.6s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes wakelockPulse { 0%, 100% { opacity: 0.5; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.15); } }
+  @media (max-width: 640px) { .wakelock-badge .wakelock-label { display: none; } .wakelock-badge { padding: 6px; } }
   .modal-body {
     padding: 1.5rem;
     overflow-y: auto;
     flex: 1;
   }
-  .block { background: rgba(255,255,255,0.01); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; overflow: hidden; transition: border-color 0.3s ease; }
-  .block-header { padding: 1rem 1.25rem; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  /* Heavy Duty Industrial Glassmorphism + barra lateral de color
+     semántico por tipo de bloque (Fuerza=teal, Metcon=fire,
+     Cardio=púrpura, Activación=gold). */
+  .block {
+    position: relative;
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+    border-left: 4px solid rgba(255,255,255,0.14);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--glass-bevel), 0 10px 24px -14px rgba(0,0,0,0.6);
+  }
+  .block--warmup { border-left-color: var(--gold); }
+  .block--main { border-left-color: var(--teal-light); }
+  .block--metcon { border-left-color: var(--fire-glow); }
+  .block--cardio { border-left-color: var(--violet); }
+  .block--core { border-left-color: var(--violet-light); }
+  .block-header { padding: 1rem 1.25rem; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
   .block-header-row { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 10px; flex-wrap: wrap; }
   .block-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
   .block-title.warmup { color: var(--gold); }
-  .block-title.main { color: var(--fire-glow); }
-  .block-title.metcon { color: var(--teal-light); }
+  .block-title.main { color: var(--teal-light); }
+  .block-title.metcon { color: var(--fire-glow); }
+  .block-title.cardio { color: var(--violet-light); }
   .block-title.core { color: var(--violet-light); }
   .block-content { padding: 0.5rem 1.25rem; }
   .block-optional-tag { font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--violet-light); background: rgba(124,77,255,0.12); padding: 2px 8px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
   .block-check-badge { font-size: 11px; font-weight: 800; color: var(--teal-light); display: none; align-items: center; gap: 4px; letter-spacing: 0.04em; text-transform: uppercase; }
   .block.block-complete { border-color: rgba(0,137,123,0.4); }
   .block.block-complete .block-check-badge { display: flex; }
+  /* Microinteracción de feedback táctil: al completar un bloque
+     (todas sus series marcadas), destello neón instantáneo en el
+     borde + tachado sutil en los títulos de ejercicio. */
+  @keyframes blockGlowFlash {
+    0% { box-shadow: var(--glass-bevel), 0 0 0 0 rgba(0,137,123,0); }
+    35% { box-shadow: var(--glass-bevel), 0 0 0 2px rgba(0,137,123,0.4), 0 0 42px 6px rgba(0,137,123,0.4); }
+    100% { box-shadow: var(--glass-bevel), 0 0 0 0 rgba(0,137,123,0); }
+  }
+  .block.flash-complete, .group-block.flash-complete { animation: blockGlowFlash 0.75s ease-out; }
+  .block.block-complete .exercise-name,
+  .group-block.block-complete .group-ex-name {
+    text-decoration: line-through;
+    text-decoration-color: var(--teal-light);
+    text-decoration-thickness: 2px;
+    opacity: 0.62;
+    transition: opacity 0.4s ease;
+  }
   .exercise-row { display: flex; gap: 16px; padding: 1.25rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
   .exercise-row:last-child { border-bottom: none; }
   .exercise-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.3rem; color: var(--fire-glow); min-width: 24px; background: rgba(255,61,0,0.06); height: 28px; width: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
@@ -510,11 +631,55 @@
   .cardio-timer.phase-rest.running .cardio-timer-toggle { background: rgba(255,61,0,0.2); border-color: var(--fire); }
   .cardio-timer.phase-prepare.running .cardio-timer-toggle { background: rgba(124,77,255,0.22); border-color: var(--violet); }
   .cardio-timer-reset:hover { background: rgba(255,255,255,0.12); }
+  /* Retroalimentación visual de cuenta regresiva: pulso de luz en la
+     caja del reloj, sincronizado con los beeps de los últimos 3s. */
+  @keyframes timerGlowFlash {
+    0% { box-shadow: 0 0 0 0 rgba(255,214,0,0); }
+    28% { box-shadow: 0 0 36px 8px rgba(255,214,0,0.55), inset 0 0 26px rgba(255,214,0,0.14); }
+    100% { box-shadow: 0 0 0 0 rgba(255,214,0,0); }
+  }
+  .cardio-timer.timer-flash { animation: timerGlowFlash 0.55s ease-out; border-radius: var(--radius-md); }
+  /* Mini-HUD flotante — sigue mostrando el timer en marcha cuando su
+     caja sale del campo visual al scrollear dentro del modal. */
+  .mini-timer-hud {
+    position: fixed;
+    left: 50%;
+    bottom: 16px;
+    transform: translate(-50%, 160%);
+    z-index: 250;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(14,14,16,0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50px;
+    padding: 8px 10px 8px 18px;
+    box-shadow: 0 16px 40px -10px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06);
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    max-width: calc(100vw - 24px);
+    pointer-events: none;
+  }
+  .mini-timer-hud.is-visible { transform: translate(-50%, 0); pointer-events: auto; }
+  .mini-hud-phase { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
+  .mini-timer-hud.phase-work .mini-hud-phase { color: var(--teal-light); }
+  .mini-timer-hud.phase-rest .mini-hud-phase { color: var(--fire-glow); }
+  .mini-timer-hud.phase-prepare .mini-hud-phase { color: var(--violet-light); }
+  .mini-hud-time { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--text-primary); font-variant-numeric: tabular-nums; line-height: 1; white-space: nowrap; }
+  .mini-hud-controls { display: flex; gap: 6px; }
+  .mini-hud-btn { background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--text-primary); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; flex-shrink: 0; transition: all 0.2s ease; }
+  .mini-hud-btn:hover { background: rgba(255,214,0,0.16); border-color: var(--gold); }
+  @media (max-width: 640px) {
+    .mini-timer-hud { left: 12px; right: 12px; transform: translateY(160%); bottom: 12px; max-width: none; }
+    .mini-timer-hud.is-visible { transform: translateY(0); }
+    .mini-hud-phase { display: none; }
+  }
   .set-checks { display: flex; gap: 6px; flex-wrap: wrap; }
   .set-check { width: 27px; height: 27px; border-radius: 50%; border: 1px solid var(--border); background: rgba(255,255,255,0.03); cursor: pointer; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all 0.2s ease; font-family: 'Inter', sans-serif; flex-shrink: 0; }
   .set-check:hover { border-color: rgba(255,61,0,0.4); color: var(--text-primary); }
   .set-check.done { background: var(--teal); border-color: var(--teal); color: #fff; }
-  .group-block { border: 1px solid var(--border); border-radius: var(--radius-md); margin: 0.5rem 0 1.25rem; overflow: hidden; transition: border-color 0.3s ease; }
+  .group-block { position: relative; background: rgba(255,255,255,0.025); border: 1px solid var(--glass-border); border-left: 3px solid rgba(124,77,255,0.4); border-radius: var(--radius-md); margin: 0.5rem 0 1.25rem; overflow: hidden; transition: border-color 0.3s ease, box-shadow 0.3s ease; box-shadow: var(--glass-bevel); }
   .group-block:last-child { margin-bottom: 0.5rem; }
   .group-block-header { padding: 0.75rem 1rem; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
   .group-block-title-wrap { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -584,154 +749,58 @@
 </head>
 <body>
 <div class="bg-ambient" aria-hidden="true">
-  <div class="bg-parallax-layer" data-depth="0.06"><div class="bg-blob bg-blob-fire"></div></div>
-  <div class="bg-parallax-layer" data-depth="0.10"><div class="bg-blob bg-blob-gold"></div></div>
-  <div class="bg-parallax-layer" data-depth="0.04"><div class="bg-blob bg-blob-violet"></div></div>
-  <div class="bg-parallax-layer" data-depth="0.08"><div class="bg-blob bg-blob-teal"></div></div>
-  <div class="bg-parallax-layer" data-depth="0.14">
-    <svg class="bg-fibers" viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <div class="bg-parallax-layer" data-depth="0.03"><div class="bg-steel-wall"></div></div>
+  <div class="bg-parallax-layer" data-depth="0.08">
+    <svg class="bg-diamond-plate" viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="fiberGrad1" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#FF3D00"/>
-          <stop offset="100%" stop-color="#FFD600"/>
-        </linearGradient>
-        <linearGradient id="fiberGrad2" x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0%" stop-color="#7C4DFF"/>
-          <stop offset="100%" stop-color="#00897B"/>
+        <pattern id="diamondPlate" width="58" height="58" patternUnits="userSpaceOnUse">
+          <path d="M29 5 L53 29 L29 53 L5 29 Z" fill="none" stroke="rgba(255,255,255,0.055)" stroke-width="1.4"/>
+          <circle cx="29" cy="29" r="2.6" fill="rgba(255,255,255,0.05)"/>
+        </pattern>
+        <linearGradient id="rackMetal" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.02)"/>
+          <stop offset="45%" stop-color="rgba(255,255,255,0.13)"/>
+          <stop offset="55%" stop-color="rgba(255,255,255,0.13)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0.02)"/>
         </linearGradient>
       </defs>
-      <path class="bg-fiber-path" d="M -100 260 C 180 120, 320 420, 560 300 S 940 140, 1300 320" stroke="url(#fiberGrad1)" />
-      <path class="bg-fiber-path" d="M -100 520 C 200 640, 380 380, 620 520 S 960 700, 1300 540" stroke="url(#fiberGrad1)" />
-      <path class="bg-fiber-path" d="M -100 900 C 220 760, 400 1040, 660 900 S 1000 720, 1300 920" stroke="url(#fiberGrad2)" />
-      <path class="bg-fiber-path" d="M -100 1220 C 240 1360, 420 1100, 680 1240 S 1020 1420, 1300 1240" stroke="url(#fiberGrad2)" />
-      <path class="bg-fiber-path" d="M -100 1480 C 200 1360, 460 1560, 720 1440 S 1040 1300, 1300 1480" stroke="url(#fiberGrad1)" />
+      <rect x="0" y="0" width="1200" height="1600" fill="url(#diamondPlate)"/>
+      <!-- Postes verticales de rack/power cage con perforaciones -->
+      <g>
+        <rect x="94" y="0" width="34" height="1600" fill="url(#rackMetal)"/>
+        <rect x="1072" y="0" width="34" height="1600" fill="url(#rackMetal)"/>
+        <g fill="rgba(0,0,0,0.4)">
+          <circle cx="111" cy="120" r="6"/><circle cx="111" cy="200" r="6"/><circle cx="111" cy="280" r="6"/>
+          <circle cx="111" cy="360" r="6"/><circle cx="111" cy="440" r="6"/><circle cx="111" cy="520" r="6"/>
+          <circle cx="111" cy="600" r="6"/><circle cx="111" cy="680" r="6"/><circle cx="111" cy="760" r="6"/>
+          <circle cx="111" cy="840" r="6"/><circle cx="111" cy="920" r="6"/><circle cx="111" cy="1000" r="6"/>
+          <circle cx="111" cy="1080" r="6"/><circle cx="111" cy="1160" r="6"/><circle cx="111" cy="1240" r="6"/>
+          <circle cx="111" cy="1320" r="6"/><circle cx="111" cy="1400" r="6"/><circle cx="111" cy="1480" r="6"/>
+          <circle cx="1089" cy="120" r="6"/><circle cx="1089" cy="200" r="6"/><circle cx="1089" cy="280" r="6"/>
+          <circle cx="1089" cy="360" r="6"/><circle cx="1089" cy="440" r="6"/><circle cx="1089" cy="520" r="6"/>
+          <circle cx="1089" cy="600" r="6"/><circle cx="1089" cy="680" r="6"/><circle cx="1089" cy="760" r="6"/>
+          <circle cx="1089" cy="840" r="6"/><circle cx="1089" cy="920" r="6"/><circle cx="1089" cy="1000" r="6"/>
+          <circle cx="1089" cy="1080" r="6"/><circle cx="1089" cy="1160" r="6"/><circle cx="1089" cy="1240" r="6"/>
+          <circle cx="1089" cy="1320" r="6"/><circle cx="1089" cy="1400" r="6"/><circle cx="1089" cy="1480" r="6"/>
+        </g>
+      </g>
+      <!-- Travesaños horizontales del cage -->
+      <g stroke="rgba(255,255,255,0.06)" stroke-width="14" fill="none">
+        <line x1="94" y1="300" x2="1106" y2="300"/>
+        <line x1="94" y1="820" x2="1106" y2="820"/>
+        <line x1="94" y1="1340" x2="1106" y2="1340"/>
+      </g>
     </svg>
   </div>
-  <div class="bg-parallax-layer" data-depth="0.11">
-    <svg class="bg-gym-gear" viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="sprayHalo" x="-80%" y="-80%" width="260%" height="260%">
-          <feGaussianBlur stdDeviation="16"/>
-        </filter>
-      </defs>
-      <!-- ============================================================
-           PARED DE FONDO — paneles de hormigón con juntas y manchas de
-           humedad/desgaste, como la pared de un gimnasio real.
-           ============================================================ -->
-      <g>
-        <rect x="0" y="0" width="1200" height="1600" fill="rgba(255,255,255,0.012)"/>
-        <g stroke="rgba(255,255,255,0.055)" stroke-width="3">
-          <line x1="410" y1="0" x2="410" y2="1600"/>
-          <line x1="830" y1="0" x2="830" y2="1600"/>
-          <line x1="0" y1="420" x2="1200" y2="420"/>
-          <line x1="0" y1="860" x2="1200" y2="860"/>
-          <line x1="0" y1="1290" x2="1200" y2="1290"/>
-        </g>
-        <g fill="rgba(255,255,255,0.02)">
-          <ellipse cx="180" cy="520" rx="150" ry="90" transform="rotate(-8 180 520)"/>
-          <ellipse cx="1020" cy="760" rx="170" ry="100" transform="rotate(10 1020 760)"/>
-          <ellipse cx="520" cy="1220" rx="200" ry="110" transform="rotate(-5 520 1220)"/>
-          <ellipse cx="950" cy="1420" rx="140" ry="80" transform="rotate(6 950 1420)"/>
-        </g>
-        <g stroke="rgba(255,255,255,0.035)" stroke-width="2" fill="none">
-          <path d="M60 300 L92 340 L78 390"/>
-          <path d="M1080 980 L1050 1030 L1068 1080"/>
-        </g>
-      </g>
-      <!-- ============================================================
-           GRAFITIS ESTILO STENCIL — equipamiento pintado en aerosol,
-           color plano + halo de sobre-rociado + chorreados de pintura.
-           ============================================================ -->
-      <!-- Barra olímpica con discos, dorado -->
-      <g transform="translate(220 600) rotate(-8)">
-        <g filter="url(#sprayHalo)" opacity="0.5">
-          <rect x="40" y="-10" width="300" height="20" fill="#FFD600"/>
-          <circle cx="0" cy="0" r="64" fill="#FFD600"/>
-          <circle cx="390" cy="0" r="64" fill="#FFD600"/>
-        </g>
-        <rect x="46" y="-8" width="300" height="16" rx="6" fill="#FFD600" stroke="rgba(10,10,11,0.7)" stroke-width="4"/>
-        <rect x="10" y="-13" width="40" height="26" rx="4" fill="#FFD600" stroke="rgba(10,10,11,0.7)" stroke-width="3.5"/>
-        <rect x="340" y="-13" width="40" height="26" rx="4" fill="#FFD600" stroke="rgba(10,10,11,0.7)" stroke-width="3.5"/>
-        <circle cx="0" cy="0" r="60" fill="#FFD600" stroke="rgba(10,10,11,0.7)" stroke-width="5"/>
-        <circle cx="0" cy="0" r="20" fill="none" stroke="rgba(10,10,11,0.6)" stroke-width="4"/>
-        <circle cx="390" cy="0" r="60" fill="#FFD600" stroke="rgba(10,10,11,0.7)" stroke-width="5"/>
-        <circle cx="390" cy="0" r="20" fill="none" stroke="rgba(10,10,11,0.6)" stroke-width="4"/>
-        <rect x="-6" y="60" width="7" height="26" rx="3.5" fill="#FFD600"/>
-        <rect x="14" y="62" width="6" height="18" rx="3" fill="#FFD600"/>
-        <rect x="384" y="60" width="7" height="30" rx="3.5" fill="#FFD600"/>
-      </g>
-      <!-- Pesa rusa (kettlebell), violeta -->
-      <g transform="translate(980 1120) rotate(3)">
-        <g filter="url(#sprayHalo)" opacity="0.5">
-          <path d="M-82 28 C-98 86 -60 132 0 134 C60 132 98 86 82 28 C82 -4 56 -20 28 -20 L-28 -20 C-56 -20 -82 -4 -82 28 Z" fill="#7C4DFF"/>
-        </g>
-        <path d="M-32 -18 C-32 -66 32 -66 32 -18" fill="none" stroke="#7C4DFF" stroke-width="17" stroke-linecap="round"/>
-        <path d="M-82 28 C-98 86 -60 132 0 134 C60 132 98 86 82 28 C82 -4 56 -20 28 -20 L-28 -20 C-56 -20 -82 -4 -82 28 Z" fill="#7C4DFF" stroke="rgba(10,10,11,0.7)" stroke-width="5"/>
-        <path d="M-30 40 Q-46 74 -34 96" fill="none" stroke="rgba(10,10,11,0.35)" stroke-width="4" stroke-linecap="round"/>
-        <rect x="-6" y="128" width="8" height="30" rx="4" fill="#7C4DFF"/>
-        <rect x="16" y="130" width="7" height="20" rx="3.5" fill="#7C4DFF"/>
-      </g>
-      <!-- Mancuerna hexagonal de caucho, teal -->
-      <g transform="translate(260 1350) rotate(6)">
-        <g filter="url(#sprayHalo)" opacity="0.5">
-          <polygon points="-86,0 -113,46.8 -167,46.8 -194,0 -167,-46.8 -113,-46.8" fill="#00897B"/>
-          <polygon points="86,0 113,46.8 167,46.8 194,0 167,-46.8 113,-46.8" fill="#00897B"/>
-        </g>
-        <rect x="-84" y="-10" width="168" height="20" rx="6" fill="#00897B" stroke="rgba(10,10,11,0.7)" stroke-width="4"/>
-        <polygon points="-86,0 -113,46.8 -167,46.8 -194,0 -167,-46.8 -113,-46.8" fill="#00897B" stroke="rgba(10,10,11,0.7)" stroke-width="4.5"/>
-        <circle cx="-140" cy="0" r="18" fill="none" stroke="rgba(10,10,11,0.6)" stroke-width="4"/>
-        <polygon points="86,0 113,46.8 167,46.8 194,0 167,-46.8 113,-46.8" fill="#00897B" stroke="rgba(10,10,11,0.7)" stroke-width="4.5"/>
-        <circle cx="140" cy="0" r="18" fill="none" stroke="rgba(10,10,11,0.6)" stroke-width="4"/>
-        <rect x="-170" y="50" width="7" height="24" rx="3.5" fill="#00897B"/>
-        <rect x="136" y="50" width="7" height="28" rx="3.5" fill="#00897B"/>
-      </g>
-      <!-- Segunda mancuerna hexagonal, fuego, más chica arriba a la izquierda -->
-      <g transform="translate(270 250) rotate(-14) scale(0.62)">
-        <polygon points="-86,0 -113,46.8 -167,46.8 -194,0 -167,-46.8 -113,-46.8" fill="#FF3D00" stroke="rgba(10,10,11,0.7)" stroke-width="5"/>
-        <rect x="-84" y="-10" width="168" height="20" rx="6" fill="#FF3D00" stroke="rgba(10,10,11,0.7)" stroke-width="5"/>
-        <circle cx="-140" cy="0" r="18" fill="none" stroke="rgba(10,10,11,0.6)" stroke-width="5"/>
-        <polygon points="86,0 113,46.8 167,46.8 194,0 167,-46.8 113,-46.8" fill="#FF3D00" stroke="rgba(10,10,11,0.7)" stroke-width="5"/>
-        <circle cx="140" cy="0" r="18" fill="none" stroke="rgba(10,10,11,0.6)" stroke-width="5"/>
-      </g>
-      <!-- ============================================================
-           FRASES MOTIVACIONALES — tipografía stencil, con halo de
-           aerosol y algún chorreado de pintura.
-           ============================================================ -->
-      <g font-family="'Barlow Condensed', sans-serif" font-weight="900" text-anchor="middle">
-        <g transform="translate(830 215) rotate(-5)">
-          <text font-size="86" fill="#FF3D00" filter="url(#sprayHalo)" opacity="0.55">EARN IT</text>
-          <text font-size="86" fill="#FF3D00" stroke="rgba(10,10,11,0.6)" stroke-width="2.5">EARN IT</text>
-          <rect x="-14" y="18" width="6" height="26" rx="3" fill="#FF3D00"/>
-          <rect x="52" y="16" width="6" height="20" rx="3" fill="#FF3D00"/>
-        </g>
-        <g transform="translate(620 810) rotate(4)">
-          <text font-size="72" fill="#FFD600" filter="url(#sprayHalo)" opacity="0.55">BEAST MODE</text>
-          <text font-size="72" fill="#FFD600" stroke="rgba(10,10,11,0.6)" stroke-width="2.2">BEAST MODE</text>
-          <rect x="-40" y="14" width="6" height="24" rx="3" fill="#FFD600"/>
-          <rect x="88" y="12" width="6" height="18" rx="3" fill="#FFD600"/>
-        </g>
-        <g transform="translate(560 1500) rotate(-3)">
-          <text font-size="64" fill="#00897B" filter="url(#sprayHalo)" opacity="0.55">NO PAIN NO GAIN</text>
-          <text font-size="64" fill="#00897B" stroke="rgba(10,10,11,0.6)" stroke-width="2">NO PAIN NO GAIN</text>
-          <rect x="-30" y="12" width="6" height="22" rx="3" fill="#00897B"/>
-        </g>
-      </g>
-    </svg>
+  <div class="bg-parallax-layer" data-depth="0.16">
+    <div class="bg-chalk-particles" id="chalk-particles"></div>
   </div>
 </div>
 <header class="masthead">
   <a class="nav-brand" href="#">
     <div class="nav-logo-icon">
       <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="boltGrad" x1="10" y1="2" x2="38" y2="46" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#FFF3B0"/>
-            <stop offset="30%" stop-color="#FFD600"/>
-            <stop offset="65%" stop-color="#FF6D3A"/>
-            <stop offset="100%" stop-color="#FF3D00"/>
-          </linearGradient>
-        </defs>
-        <path d="M27.5 1.5 L8 27 H19.5 L14 46.5 L40 19 H27 L27.5 1.5 Z" fill="url(#boltGrad)" stroke="#0A0A0B" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M27.5 1.5 L8 27 H19.5 L14 46.5 L40 19 H27 L27.5 1.5 Z" fill="#FFD600" stroke="#000000" stroke-width="3" stroke-linejoin="round"/>
       </svg>
     </div>
     <div class="nav-brand-wordmark">
@@ -744,7 +813,7 @@
   <div class="sticky-bar-brand">
     <div class="nav-logo-icon">
       <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M27.5 1.5 L8 27 H19.5 L14 46.5 L40 19 H27 L27.5 1.5 Z" fill="url(#boltGrad)" stroke="#0A0A0B" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M27.5 1.5 L8 27 H19.5 L14 46.5 L40 19 H27 L27.5 1.5 Z" fill="#FFD600" stroke="#000000" stroke-width="3" stroke-linejoin="round"/>
       </svg>
     </div>
     <span class="sticky-bar-text">COACH<span>&nbsp;JP</span></span>
@@ -877,7 +946,10 @@
         <div class="card-tags" id="modal-tags"></div>
         <div class="modal-title" id="modal-title"></div>
       </div>
-      <button class="modal-close" id="modal-close" aria-label="Cerrar">&#x2715;</button>
+      <div class="modal-header-actions">
+        <span class="wakelock-badge" id="wakelock-badge"><span class="wakelock-dot"></span><span class="wakelock-label">Pantalla Activa</span></span>
+        <button class="modal-close" id="modal-close" aria-label="Cerrar">&#x2715;</button>
+      </div>
     </div>
     <div class="modal-body" id="modal-body">
       <div id="modal-exercises-content"></div>
@@ -898,6 +970,14 @@
       <iframe id="video-popup-iframe" src="" title="Video técnica de ejercicio" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <div class="video-popup-fallback">¿No carga? <a id="video-popup-fallback-link" href="#" target="_blank" rel="noopener">Abrilo en YouTube ↗</a></div>
+  </div>
+</div>
+<div class="mini-timer-hud" id="mini-timer-hud" aria-hidden="true">
+  <span class="mini-hud-phase">Trabajo</span>
+  <span class="mini-hud-time">00:00</span>
+  <div class="mini-hud-controls">
+    <button type="button" class="mini-hud-btn mini-hud-toggle" aria-label="Pausar/Iniciar">▶</button>
+    <button type="button" class="mini-hud-btn mini-hud-reset" aria-label="Reiniciar">↺</button>
   </div>
 </div>
 <script>
@@ -1439,20 +1519,30 @@ const STORAGE_KEY_ARMS_FINISHER = 'coachjp_arms_finisher_v1';
 let wakeLockRef = null;
 let activeTimersCount = 0;
 const timerIntervals = new Map();
+/* Badge que confirma al atleta que el WakeLock está sosteniendo la
+   pantalla encendida (no se va a apagar) mientras corre algún timer.
+   Se oculta por completo cuando no hay ningún timer activo. */
+function updateWakeLockBadge() {
+  const badge = document.getElementById('wakelock-badge');
+  if (!badge) return;
+  badge.classList.toggle('is-active', !!wakeLockRef);
+}
 async function acquireWakeLock() {
   if (wakeLockRef) return;
   try {
     if ('wakeLock' in navigator) {
       wakeLockRef = await navigator.wakeLock.request('screen');
-      wakeLockRef.addEventListener('release', () => { wakeLockRef = null; });
+      wakeLockRef.addEventListener('release', () => { wakeLockRef = null; updateWakeLockBadge(); });
     }
   } catch (e) { /* no soportado o permiso denegado */ }
+  updateWakeLockBadge();
 }
 async function releaseWakeLockIfIdle() {
   if (activeTimersCount <= 0 && wakeLockRef) {
     try { await wakeLockRef.release(); } catch (e) { /* noop */ }
     wakeLockRef = null;
   }
+  updateWakeLockBadge();
 }
 document.addEventListener('visibilitychange', async () => {
   if (document.visibilityState === 'visible' && activeTimersCount > 0) {
@@ -1467,6 +1557,102 @@ function formatTime(totalSeconds) {
 function updateTimerDisplay(el, seconds) {
   const display = el.querySelector('.ex-timer-display');
   if (display) display.textContent = formatTime(seconds);
+  if (el === focusedTimerEl) syncMiniHudContent();
+}
+/* ============================================================
+   MINI-HUD FLOTANTE — cuando el timer/cronómetro en marcha sale
+   del campo visual al scrollear dentro del modal, este panel fijo
+   en la parte inferior lo sigue mostrando (segundos, fase y
+   controles rápidos de pausa/reinicio).
+   ============================================================ */
+let focusedTimerEl = null;
+let focusedTimerKind = null; // 'ex' | 'cardio'
+function setFocusedTimer(el, kind) {
+  focusedTimerEl = el;
+  focusedTimerKind = kind;
+  syncMiniHudContent();
+  checkMiniHudVisibility();
+}
+function clearFocusedTimer(el) {
+  if (!el || focusedTimerEl === el) {
+    focusedTimerEl = null;
+    focusedTimerKind = null;
+    hideMiniHud();
+  }
+}
+function hideMiniHud() {
+  const hud = document.getElementById('mini-timer-hud');
+  if (hud) hud.classList.remove('is-visible');
+}
+function syncMiniHudContent() {
+  const hud = document.getElementById('mini-timer-hud');
+  if (!hud || !focusedTimerEl) return;
+  const phaseEl = hud.querySelector('.mini-hud-phase');
+  const timeEl = hud.querySelector('.mini-hud-time');
+  const toggleBtn = hud.querySelector('.mini-hud-toggle');
+  let phase = 'work';
+  let remaining = 0;
+  if (focusedTimerKind === 'cardio') {
+    phase = focusedTimerEl.dataset.phase;
+    remaining = Math.max(0, parseInt(focusedTimerEl.dataset.remaining, 10) || 0);
+    if (phaseEl) phaseEl.textContent = phase === 'work' ? 'Trabajo' : (phase === 'rest' ? 'Descanso' : 'Preparate');
+  } else {
+    phase = focusedTimerEl.classList.contains('work') ? 'work' : 'rest';
+    remaining = Math.max(0, parseInt(focusedTimerEl.dataset.remaining, 10) || 0);
+    if (phaseEl) phaseEl.textContent = phase === 'work' ? 'Trabajo' : 'Descanso';
+  }
+  if (timeEl) timeEl.textContent = formatTime(remaining);
+  if (toggleBtn) toggleBtn.textContent = focusedTimerEl.dataset.running === '1' ? '❚❚' : '▶';
+  hud.classList.toggle('phase-work', phase === 'work');
+  hud.classList.toggle('phase-rest', phase === 'rest');
+  hud.classList.toggle('phase-prepare', phase === 'prepare');
+}
+function checkMiniHudVisibility() {
+  const modalBody = document.getElementById('modal-body');
+  const hud = document.getElementById('mini-timer-hud');
+  if (!modalBody || !hud) return;
+  if (!focusedTimerEl || !focusedTimerEl.isConnected || focusedTimerEl.dataset.running !== '1') {
+    hud.classList.remove('is-visible');
+    return;
+  }
+  const containerRect = modalBody.getBoundingClientRect();
+  const elRect = focusedTimerEl.getBoundingClientRect();
+  const fullyVisible = elRect.top >= containerRect.top && elRect.bottom <= containerRect.bottom;
+  hud.classList.toggle('is-visible', !fullyVisible);
+}
+function initMiniHudWatcher() {
+  const modalBody = document.getElementById('modal-body');
+  const hud = document.getElementById('mini-timer-hud');
+  if (!modalBody || !hud) return;
+  let ticking = false;
+  modalBody.addEventListener('scroll', () => {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(() => { checkMiniHudVisibility(); ticking = false; });
+    }
+  }, { passive: true });
+  const toggleBtn = hud.querySelector('.mini-hud-toggle');
+  const resetBtn = hud.querySelector('.mini-hud-reset');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      if (!focusedTimerEl) return;
+      unlockAudio();
+      if (focusedTimerKind === 'cardio') { toggleCardioTimer(focusedTimerEl); } else { toggleExTimer(focusedTimerEl); }
+    });
+  }
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      if (!focusedTimerEl) return;
+      if (focusedTimerKind === 'cardio') { resetCardioTimer(focusedTimerEl); } else { resetExTimer(focusedTimerEl); }
+    });
+  }
+}
+/* Pulso de luz (glow flash) en la caja del reloj, sincronizado con
+   los beeps de la cuenta regresiva de los últimos 3 segundos. */
+function flashTimerGlow(el) {
+  el.classList.remove('timer-flash');
+  void el.offsetWidth;
+  el.classList.add('timer-flash');
 }
 let sharedAudioCtx = null;
 function ensureAudioCtx() {
@@ -1549,6 +1735,7 @@ async function startExTimer(el) {
   if (btn) { btn.textContent = '❚❚'; btn.setAttribute('aria-label', 'Pausar temporizador'); }
   activeTimersCount++;
   await acquireWakeLock();
+  setFocusedTimer(el, 'ex');
   const interval = setInterval(() => {
     let remaining = parseInt(el.dataset.remaining, 10) - 1;
     if (remaining <= 0) {
@@ -1571,6 +1758,7 @@ function pauseExTimer(el) {
   if (interval) { clearInterval(interval); timerIntervals.delete(el); }
   activeTimersCount = Math.max(0, activeTimersCount - 1);
   releaseWakeLockIfIdle();
+  if (el === focusedTimerEl) { syncMiniHudContent(); checkMiniHudVisibility(); }
 }
 function finishExTimer(el) {
   const interval = timerIntervals.get(el);
@@ -1584,6 +1772,7 @@ function finishExTimer(el) {
   releaseWakeLockIfIdle();
   playTimerBeep();
   if (navigator.vibrate) { try { navigator.vibrate([200, 100, 200]); } catch (e) { /* noop */ } }
+  if (el === focusedTimerEl) { syncMiniHudContent(); checkMiniHudVisibility(); }
 }
 function resetExTimer(el) {
   pauseExTimer(el);
@@ -1648,6 +1837,7 @@ function updateCardioDisplay(el) {
     const fraction = Math.min(1, Math.max(0, (totalForPhase - remaining) / totalForPhase));
     barFill.style.width = `${(fraction * 100).toFixed(1)}%`;
   }
+  if (el === focusedTimerEl) syncMiniHudContent();
 }
 function cardioTimerTick(el) {
   let remaining = parseInt(el.dataset.remaining, 10) - 1;
@@ -1677,10 +1867,13 @@ function cardioTimerTick(el) {
     if (navigator.vibrate) { try { navigator.vibrate(150); } catch (e) { /* noop */ } }
   } else if (remaining === 3) {
     playCountdownTone(3);
+    flashTimerGlow(el);
   } else if (remaining === 2) {
     playCountdownTone(2);
+    flashTimerGlow(el);
   } else if (remaining === 1) {
     playCountdownTone(1);
+    flashTimerGlow(el);
   }
   el.dataset.remaining = String(remaining);
   updateCardioDisplay(el);
@@ -1693,6 +1886,7 @@ async function startCardioTimer(el) {
   if (btn) { btn.textContent = '❚❚'; btn.setAttribute('aria-label', 'Pausar cronómetro'); }
   activeTimersCount++;
   await acquireWakeLock();
+  setFocusedTimer(el, 'cardio');
   const interval = setInterval(() => cardioTimerTick(el), 1000);
   timerIntervals.set(el, interval);
 }
@@ -1705,6 +1899,7 @@ function pauseCardioTimer(el) {
   if (interval) { clearInterval(interval); timerIntervals.delete(el); }
   activeTimersCount = Math.max(0, activeTimersCount - 1);
   releaseWakeLockIfIdle();
+  if (el === focusedTimerEl) { syncMiniHudContent(); checkMiniHudVisibility(); }
 }
 function finishCardioTimer(el) {
   pauseCardioTimer(el);
@@ -1814,8 +2009,14 @@ function updateBlockCompletionBadge(container) {
   if (!container) return;
   const checks = container.querySelectorAll('.set-check');
   if (!checks.length) return;
+  const wasComplete = container.classList.contains('block-complete');
   const allDone = Array.from(checks).every((c) => c.classList.contains('done'));
   container.classList.toggle('block-complete', allDone);
+  if (allDone && !wasComplete) {
+    container.classList.remove('flash-complete');
+    void container.offsetWidth;
+    container.classList.add('flash-complete');
+  }
 }
 function refreshAllBlockBadges() {
   document.querySelectorAll('.group-block, #modal-exercises-content > .block').forEach((container) => {
@@ -2148,7 +2349,7 @@ function renderFinisher(workout) {
       </div>`;
   });
   return `
-    <div class="block">
+    <div class="block block--metcon">
       <div class="block-header"><div class="block-title metcon">⚡ Finisher — Bombeo Final</div></div>
       <div class="block-content">
         <div class="group-block" style="margin-top:0;">
@@ -2228,7 +2429,7 @@ function renderCore(workout) {
     return renderSimpleExRow(ex, key, idx);
   }).join('');
   return `
-    <div class="block js-optional-block">
+    <div class="block block--core js-optional-block">
       <div class="block-header">
         <div class="block-header-row">
           <div class="block-title core">🧩 Bloque Opcional — Core <span class="block-optional-tag">Modo Completo</span></div>
@@ -2242,10 +2443,10 @@ function renderCardio(workout) {
   const c = workout.cardio;
   if (!c) return '';
   return `
-    <div class="block js-optional-block">
+    <div class="block block--cardio js-optional-block">
       <div class="block-header">
         <div class="block-header-row">
-          <div class="block-title metcon">🫀 Bloque Opcional — Cardio Intermitente <span class="block-optional-tag">Modo Completo</span></div>
+          <div class="block-title cardio">🫀 Bloque Opcional — Cardio Intermitente <span class="block-optional-tag">Modo Completo</span></div>
           <span class="block-check-badge">✓ Completo</span>
         </div>
       </div>
@@ -2292,7 +2493,7 @@ function renderSimpleExRow(ex, key, idx) {
 }
 function renderCooldown(list) {
   return `
-    <div class="block">
+    <div class="block block--warmup">
       <div class="block-header"><div class="block-title" style="color:var(--gold);">🧘 Cool-Down y Movilidad</div></div>
       <div class="block-content"><ul class="cooldown-list">${list.map((t) => `<li>${t}</li>`).join('')}</ul></div>
     </div>`;
@@ -2302,6 +2503,7 @@ function renderCooldown(list) {
    ============================================================ */
 function openModal(w, triggerEl) {
   clearAllExTimers();
+  clearFocusedTimer();
   lastFocusedElement = triggerEl || document.activeElement;
   const overlay = document.getElementById('overlay');
   const title = document.getElementById('modal-title');
@@ -2316,7 +2518,7 @@ function openModal(w, triggerEl) {
   let html = '';
   if (w.warmup && w.warmup.length > 0) {
     html += `
-      <div class="block">
+      <div class="block block--warmup">
         <div class="block-header"><div class="block-title warmup">🔥 Warm Up / Activación Específica</div></div>
         <div class="block-content">`;
     w.warmup.forEach((ex, idx) => { html += renderWarmupRow(ex, idx); });
@@ -2324,7 +2526,7 @@ function openModal(w, triggerEl) {
   }
   if (w.main && w.main.length > 0) {
     html += `
-      <div class="block">
+      <div class="block block--main">
         <div class="block-header"><div class="block-title main">🏋️‍♂️ Bloques Principales</div></div>
         <div class="block-content" style="padding-top:0.75rem;">`;
     w.main.forEach((block, idx) => { html += renderMainBlock(w, block, idx); });
@@ -2397,6 +2599,7 @@ function handleModalKeydown(e) {
 }
 function closeModal() {
   closeVideoPopup();
+  hideMiniHud();
   document.getElementById('overlay').classList.remove('open');
   document.removeEventListener('keydown', handleModalKeydown);
   if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
@@ -2483,6 +2686,42 @@ function initAmbientParallax() {
   apply();
 }
 /* ============================================================
+   PARTÍCULAS DE TIZA/MAGNESIO — capa 3 del fondo "Steel Vault &
+   Raw Chalk": polvo suspendido que asciende lentamente y se
+   desvanece; la capa contenedora ya tiene su propio parallax de
+   scroll (ver initAmbientParallax), así que reacciona al deslizar
+   la pantalla además de flotar de forma continua.
+   ============================================================ */
+function initChalkParticles() {
+  const container = document.getElementById('chalk-particles');
+  if (!container) return;
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+  const COUNT = 26;
+  for (let i = 0; i < COUNT; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'chalk-dust';
+    const size = 2 + Math.random() * 5;
+    const left = Math.random() * 100;
+    const top = 35 + Math.random() * 60;
+    const duration = 14 + Math.random() * 18;
+    const delay = Math.random() * -32;
+    const driftX = Math.round(Math.random() * 90 - 45) + 'px';
+    const driftY = -Math.round(220 + Math.random() * 280) + 'px';
+    const op = (0.25 + Math.random() * 0.45).toFixed(2);
+    dot.style.width = size + 'px';
+    dot.style.height = size + 'px';
+    dot.style.left = left + '%';
+    dot.style.top = top + '%';
+    dot.style.animationDuration = duration + 's';
+    dot.style.animationDelay = delay + 's';
+    dot.style.setProperty('--drift-x', driftX);
+    dot.style.setProperty('--drift-y', driftY);
+    dot.style.setProperty('--dust-op', op);
+    container.appendChild(dot);
+  }
+}
+/* ============================================================
    BARRA STICKY DE MARCA — aparece al scrollear más allá del
    masthead grande, para mantener la identidad visible.
    ============================================================ */
@@ -2517,6 +2756,8 @@ async function init() {
   filterGrid();
   initAmbientParallax();
   initStickyBar();
+  initChalkParticles();
+  initMiniHudWatcher();
 }
 init();
 </script>
