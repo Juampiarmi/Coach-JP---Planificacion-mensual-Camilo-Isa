@@ -188,7 +188,6 @@
   .sticky-bar .nav-logo-icon svg { width: 26px; height: 26px; }
   .sticky-bar-text { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.55rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-primary); white-space: nowrap; }
   .sticky-bar-text span { color: var(--fire); }
-  .sticky-bar .nav-badge { flex-shrink: 0; }
   .nav-brand { display: flex; align-items: center; gap: 20px; text-decoration: none; }
   .nav-logo-icon {
     position: relative;
@@ -611,118 +610,111 @@
   <div class="bg-parallax-layer" data-depth="0.11">
     <svg class="bg-gym-gear" viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="ironGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="rgba(255,224,120,0.5)"/>
-          <stop offset="55%" stop-color="rgba(160,130,20,0.32)"/>
-          <stop offset="100%" stop-color="rgba(90,72,10,0.28)"/>
-        </linearGradient>
-        <linearGradient id="chromeGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="rgba(250,250,252,0.6)"/>
-          <stop offset="45%" stop-color="rgba(170,170,182,0.34)"/>
-          <stop offset="100%" stop-color="rgba(245,245,248,0.52)"/>
-        </linearGradient>
-        <radialGradient id="plateGoldGrad" cx="35%" cy="28%" r="78%">
-          <stop offset="0%" stop-color="rgba(255,224,120,0.48)"/>
-          <stop offset="100%" stop-color="rgba(170,120,0,0.20)"/>
-        </radialGradient>
-        <radialGradient id="plateVioletGrad" cx="35%" cy="28%" r="78%">
-          <stop offset="0%" stop-color="rgba(170,140,255,0.46)"/>
-          <stop offset="100%" stop-color="rgba(90,50,190,0.20)"/>
-        </radialGradient>
-        <radialGradient id="plateFireGrad" cx="35%" cy="28%" r="78%">
-          <stop offset="0%" stop-color="rgba(255,140,90,0.46)"/>
-          <stop offset="100%" stop-color="rgba(180,40,0,0.20)"/>
-        </radialGradient>
-        <radialGradient id="rubberTealGrad" cx="32%" cy="26%" r="80%">
-          <stop offset="0%" stop-color="rgba(50,190,175,0.55)"/>
-          <stop offset="100%" stop-color="rgba(0,80,72,0.32)"/>
-        </radialGradient>
-        <radialGradient id="rubberFireGrad" cx="32%" cy="26%" r="80%">
-          <stop offset="0%" stop-color="rgba(255,130,80,0.48)"/>
-          <stop offset="100%" stop-color="rgba(160,45,0,0.26)"/>
-        </radialGradient>
-        <radialGradient id="kettlebellGrad" cx="32%" cy="22%" r="82%">
-          <stop offset="0%" stop-color="rgba(170,140,255,0.42)"/>
-          <stop offset="100%" stop-color="rgba(70,42,160,0.22)"/>
-        </radialGradient>
+        <filter id="sprayHalo" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="16"/>
+        </filter>
       </defs>
-      <!-- Rack de sentadillas (power rack), esquina superior derecha: postes con
-           perforaciones, barra de dominadas, ganchos J-cup y pies de base -->
+      <!-- ============================================================
+           PARED DE FONDO — paneles de hormigón con juntas y manchas de
+           humedad/desgaste, como la pared de un gimnasio real.
+           ============================================================ -->
       <g>
-        <rect x="880" y="34" width="262" height="14" rx="6" fill="url(#ironGrad)"/>
-        <rect x="880" y="40" width="22" height="512" rx="4" fill="url(#ironGrad)"/>
-        <rect x="1120" y="40" width="22" height="512" rx="4" fill="url(#ironGrad)"/>
-        <rect x="850" y="540" width="82" height="15" rx="6" fill="url(#ironGrad)"/>
-        <rect x="1090" y="540" width="82" height="15" rx="6" fill="url(#ironGrad)"/>
-        <g fill="rgba(8,8,9,0.55)">
-          <circle cx="891" cy="72" r="4"/><circle cx="891" cy="112" r="4"/><circle cx="891" cy="152" r="4"/>
-          <circle cx="891" cy="192" r="4"/><circle cx="891" cy="232" r="4"/><circle cx="891" cy="272" r="4"/>
-          <circle cx="891" cy="312" r="4"/><circle cx="891" cy="352" r="4"/><circle cx="891" cy="392" r="4"/>
-          <circle cx="891" cy="432" r="4"/><circle cx="891" cy="472" r="4"/><circle cx="891" cy="512" r="4"/>
-          <circle cx="1131" cy="72" r="4"/><circle cx="1131" cy="112" r="4"/><circle cx="1131" cy="152" r="4"/>
-          <circle cx="1131" cy="192" r="4"/><circle cx="1131" cy="232" r="4"/><circle cx="1131" cy="272" r="4"/>
-          <circle cx="1131" cy="312" r="4"/><circle cx="1131" cy="352" r="4"/><circle cx="1131" cy="392" r="4"/>
-          <circle cx="1131" cy="432" r="4"/><circle cx="1131" cy="472" r="4"/><circle cx="1131" cy="512" r="4"/>
+        <rect x="0" y="0" width="1200" height="1600" fill="rgba(255,255,255,0.012)"/>
+        <g stroke="rgba(255,255,255,0.055)" stroke-width="3">
+          <line x1="410" y1="0" x2="410" y2="1600"/>
+          <line x1="830" y1="0" x2="830" y2="1600"/>
+          <line x1="0" y1="420" x2="1200" y2="420"/>
+          <line x1="0" y1="860" x2="1200" y2="860"/>
+          <line x1="0" y1="1290" x2="1200" y2="1290"/>
         </g>
-        <path d="M902 258 h30 v13 h-18 l-12 -8 Z" fill="url(#ironGrad)"/>
-        <path d="M1120 258 h-30 v13 h18 l12 -8 Z" fill="url(#ironGrad)"/>
-        <rect x="902" y="368" width="240" height="9" rx="4.5" fill="url(#ironGrad)" opacity="0.75"/>
-      </g>
-      <!-- Barra olímpica #1 con discos tipo bumper plate (aro de goma + buje metálico),
-           franja media-izquierda, diagonal -->
-      <g transform="translate(30 620) rotate(-9)">
-        <rect x="46" y="-9" width="300" height="18" rx="9" fill="url(#chromeGrad)"/>
-        <g stroke="rgba(8,8,9,0.3)" stroke-width="2" stroke-linecap="round">
-          <line x1="90" y1="-8" x2="90" y2="8"/><line x1="106" y1="-8" x2="106" y2="8"/><line x1="122" y1="-8" x2="122" y2="8"/>
-          <line x1="270" y1="-8" x2="270" y2="8"/><line x1="286" y1="-8" x2="286" y2="8"/><line x1="302" y1="-8" x2="302" y2="8"/>
+        <g fill="rgba(255,255,255,0.02)">
+          <ellipse cx="180" cy="520" rx="150" ry="90" transform="rotate(-8 180 520)"/>
+          <ellipse cx="1020" cy="760" rx="170" ry="100" transform="rotate(10 1020 760)"/>
+          <ellipse cx="520" cy="1220" rx="200" ry="110" transform="rotate(-5 520 1220)"/>
+          <ellipse cx="950" cy="1420" rx="140" ry="80" transform="rotate(6 950 1420)"/>
         </g>
-        <rect x="8" y="-12" width="42" height="24" rx="6" fill="url(#chromeGrad)"/>
-        <rect x="342" y="-12" width="42" height="24" rx="6" fill="url(#chromeGrad)"/>
-        <circle cx="0" cy="0" r="62" fill="url(#plateGoldGrad)" stroke="rgba(8,8,9,0.4)" stroke-width="3"/>
-        <circle cx="0" cy="0" r="22" fill="url(#chromeGrad)" stroke="rgba(8,8,9,0.3)" stroke-width="2"/>
-        <circle cx="390" cy="0" r="62" fill="url(#plateGoldGrad)" stroke="rgba(8,8,9,0.4)" stroke-width="3"/>
-        <circle cx="390" cy="0" r="22" fill="url(#chromeGrad)" stroke="rgba(8,8,9,0.3)" stroke-width="2"/>
+        <g stroke="rgba(255,255,255,0.035)" stroke-width="2" fill="none">
+          <path d="M60 300 L92 340 L78 390"/>
+          <path d="M1080 980 L1050 1030 L1068 1080"/>
+        </g>
       </g>
-      <!-- Barra olímpica #2, franja inferior derecha, discos violeta -->
-      <g transform="translate(800 1420) rotate(13)">
-        <rect x="36" y="-8" width="240" height="16" rx="8" fill="url(#chromeGrad)"/>
-        <rect x="6" y="-11" width="36" height="22" rx="6" fill="url(#chromeGrad)"/>
-        <rect x="276" y="-11" width="36" height="22" rx="6" fill="url(#chromeGrad)"/>
-        <circle cx="0" cy="0" r="50" fill="url(#plateVioletGrad)" stroke="rgba(8,8,9,0.38)" stroke-width="3"/>
-        <circle cx="0" cy="0" r="18" fill="url(#chromeGrad)" stroke="rgba(8,8,9,0.28)" stroke-width="2"/>
-        <circle cx="312" cy="0" r="50" fill="url(#plateVioletGrad)" stroke="rgba(8,8,9,0.38)" stroke-width="3"/>
-        <circle cx="312" cy="0" r="18" fill="url(#chromeGrad)" stroke="rgba(8,8,9,0.28)" stroke-width="2"/>
+      <!-- ============================================================
+           GRAFITIS ESTILO STENCIL — equipamiento pintado en aerosol,
+           color plano + halo de sobre-rociado + chorreados de pintura.
+           ============================================================ -->
+      <!-- Barra olímpica con discos, dorado -->
+      <g transform="translate(220 600) rotate(-8)">
+        <g filter="url(#sprayHalo)" opacity="0.5">
+          <rect x="40" y="-10" width="300" height="20" fill="#FFD600"/>
+          <circle cx="0" cy="0" r="64" fill="#FFD600"/>
+          <circle cx="390" cy="0" r="64" fill="#FFD600"/>
+        </g>
+        <rect x="46" y="-8" width="300" height="16" rx="6" fill="#FFD600" stroke="rgba(10,10,11,0.7)" stroke-width="4"/>
+        <rect x="10" y="-13" width="40" height="26" rx="4" fill="#FFD600" stroke="rgba(10,10,11,0.7)" stroke-width="3.5"/>
+        <rect x="340" y="-13" width="40" height="26" rx="4" fill="#FFD600" stroke="rgba(10,10,11,0.7)" stroke-width="3.5"/>
+        <circle cx="0" cy="0" r="60" fill="#FFD600" stroke="rgba(10,10,11,0.7)" stroke-width="5"/>
+        <circle cx="0" cy="0" r="20" fill="none" stroke="rgba(10,10,11,0.6)" stroke-width="4"/>
+        <circle cx="390" cy="0" r="60" fill="#FFD600" stroke="rgba(10,10,11,0.7)" stroke-width="5"/>
+        <circle cx="390" cy="0" r="20" fill="none" stroke="rgba(10,10,11,0.6)" stroke-width="4"/>
+        <rect x="-6" y="60" width="7" height="26" rx="3.5" fill="#FFD600"/>
+        <rect x="14" y="62" width="6" height="18" rx="3" fill="#FFD600"/>
+        <rect x="384" y="60" width="7" height="30" rx="3.5" fill="#FFD600"/>
       </g>
-      <!-- Pesa rusa (kettlebell) con silueta de campana realista, inferior derecha -->
-      <g transform="translate(970 1130)">
-        <path d="M-32 -18 C-32 -64 32 -64 32 -18" fill="none" stroke="url(#kettlebellGrad)" stroke-width="16" stroke-linecap="round"/>
-        <path d="M-80 26 C-95 82 -58 128 0 130 C58 128 95 82 80 26 C80 -4 56 -20 28 -20 L-28 -20 C-56 -20 -80 -4 -80 26 Z" fill="url(#kettlebellGrad)" stroke="rgba(140,110,255,0.45)" stroke-width="3"/>
-        <ellipse cx="-18" cy="46" rx="20" ry="30" fill="rgba(255,255,255,0.08)"/>
+      <!-- Pesa rusa (kettlebell), violeta -->
+      <g transform="translate(980 1120) rotate(3)">
+        <g filter="url(#sprayHalo)" opacity="0.5">
+          <path d="M-82 28 C-98 86 -60 132 0 134 C60 132 98 86 82 28 C82 -4 56 -20 28 -20 L-28 -20 C-56 -20 -82 -4 -82 28 Z" fill="#7C4DFF"/>
+        </g>
+        <path d="M-32 -18 C-32 -66 32 -66 32 -18" fill="none" stroke="#7C4DFF" stroke-width="17" stroke-linecap="round"/>
+        <path d="M-82 28 C-98 86 -60 132 0 134 C60 132 98 86 82 28 C82 -4 56 -20 28 -20 L-28 -20 C-56 -20 -82 -4 -82 28 Z" fill="#7C4DFF" stroke="rgba(10,10,11,0.7)" stroke-width="5"/>
+        <path d="M-30 40 Q-46 74 -34 96" fill="none" stroke="rgba(10,10,11,0.35)" stroke-width="4" stroke-linecap="round"/>
+        <rect x="-6" y="128" width="8" height="30" rx="4" fill="#7C4DFF"/>
+        <rect x="16" y="130" width="7" height="20" rx="3.5" fill="#7C4DFF"/>
       </g>
-      <!-- Mancuerna hexagonal forrada en caucho #1 (teal), inferior izquierda -->
-      <g transform="translate(280 1360) rotate(8)">
-        <rect x="-84" y="-11" width="168" height="22" rx="7" fill="url(#chromeGrad)"/>
-        <polygon points="-86,0 -113,46.8 -167,46.8 -194,0 -167,-46.8 -113,-46.8" fill="url(#rubberTealGrad)" stroke="rgba(6,6,7,0.4)" stroke-width="2.5"/>
-        <circle cx="-140" cy="0" r="19" fill="url(#chromeGrad)" stroke="rgba(6,6,7,0.3)" stroke-width="2"/>
-        <polygon points="86,0 113,46.8 167,46.8 194,0 167,-46.8 113,-46.8" fill="url(#rubberTealGrad)" stroke="rgba(6,6,7,0.4)" stroke-width="2.5"/>
-        <circle cx="140" cy="0" r="19" fill="url(#chromeGrad)" stroke="rgba(6,6,7,0.3)" stroke-width="2"/>
+      <!-- Mancuerna hexagonal de caucho, teal -->
+      <g transform="translate(260 1350) rotate(6)">
+        <g filter="url(#sprayHalo)" opacity="0.5">
+          <polygon points="-86,0 -113,46.8 -167,46.8 -194,0 -167,-46.8 -113,-46.8" fill="#00897B"/>
+          <polygon points="86,0 113,46.8 167,46.8 194,0 167,-46.8 113,-46.8" fill="#00897B"/>
+        </g>
+        <rect x="-84" y="-10" width="168" height="20" rx="6" fill="#00897B" stroke="rgba(10,10,11,0.7)" stroke-width="4"/>
+        <polygon points="-86,0 -113,46.8 -167,46.8 -194,0 -167,-46.8 -113,-46.8" fill="#00897B" stroke="rgba(10,10,11,0.7)" stroke-width="4.5"/>
+        <circle cx="-140" cy="0" r="18" fill="none" stroke="rgba(10,10,11,0.6)" stroke-width="4"/>
+        <polygon points="86,0 113,46.8 167,46.8 194,0 167,-46.8 113,-46.8" fill="#00897B" stroke="rgba(10,10,11,0.7)" stroke-width="4.5"/>
+        <circle cx="140" cy="0" r="18" fill="none" stroke="rgba(10,10,11,0.6)" stroke-width="4"/>
+        <rect x="-170" y="50" width="7" height="24" rx="3.5" fill="#00897B"/>
+        <rect x="136" y="50" width="7" height="28" rx="3.5" fill="#00897B"/>
       </g>
-      <!-- Mancuerna hexagonal forrada en caucho #2 (fuego), franja superior izquierda -->
-      <g transform="translate(200 210) rotate(-16) scale(0.7)">
-        <rect x="-84" y="-11" width="168" height="22" rx="7" fill="url(#chromeGrad)"/>
-        <polygon points="-86,0 -113,46.8 -167,46.8 -194,0 -167,-46.8 -113,-46.8" fill="url(#rubberFireGrad)" stroke="rgba(6,6,7,0.4)" stroke-width="2.5"/>
-        <circle cx="-140" cy="0" r="19" fill="url(#chromeGrad)" stroke="rgba(6,6,7,0.3)" stroke-width="2"/>
-        <polygon points="86,0 113,46.8 167,46.8 194,0 167,-46.8 113,-46.8" fill="url(#rubberFireGrad)" stroke="rgba(6,6,7,0.4)" stroke-width="2.5"/>
-        <circle cx="140" cy="0" r="19" fill="url(#chromeGrad)" stroke="rgba(6,6,7,0.3)" stroke-width="2"/>
+      <!-- Segunda mancuerna hexagonal, fuego, más chica arriba a la izquierda -->
+      <g transform="translate(270 250) rotate(-14) scale(0.62)">
+        <polygon points="-86,0 -113,46.8 -167,46.8 -194,0 -167,-46.8 -113,-46.8" fill="#FF3D00" stroke="rgba(10,10,11,0.7)" stroke-width="5"/>
+        <rect x="-84" y="-10" width="168" height="20" rx="6" fill="#FF3D00" stroke="rgba(10,10,11,0.7)" stroke-width="5"/>
+        <circle cx="-140" cy="0" r="18" fill="none" stroke="rgba(10,10,11,0.6)" stroke-width="5"/>
+        <polygon points="86,0 113,46.8 167,46.8 194,0 167,-46.8 113,-46.8" fill="#FF3D00" stroke="rgba(10,10,11,0.7)" stroke-width="5"/>
+        <circle cx="140" cy="0" r="18" fill="none" stroke="rgba(10,10,11,0.6)" stroke-width="5"/>
       </g>
-      <!-- Pila de discos apoyados contra la pared, centro — perspectiva leve tipo elipse -->
-      <g transform="translate(590 970)">
-        <ellipse cx="0" cy="46" rx="76" ry="21" fill="url(#plateFireGrad)" stroke="rgba(6,6,7,0.35)" stroke-width="2.5"/>
-        <ellipse cx="0" cy="46" rx="26" ry="7.5" fill="url(#chromeGrad)"/>
-        <ellipse cx="34" cy="14" rx="70" ry="19.5" fill="url(#plateGoldGrad)" stroke="rgba(6,6,7,0.35)" stroke-width="2.5"/>
-        <ellipse cx="34" cy="14" rx="24" ry="7" fill="url(#chromeGrad)"/>
-        <ellipse cx="62" cy="-18" rx="62" ry="17.5" fill="url(#plateVioletGrad)" stroke="rgba(6,6,7,0.35)" stroke-width="2.5"/>
-        <ellipse cx="62" cy="-18" rx="21" ry="6.2" fill="url(#chromeGrad)"/>
+      <!-- ============================================================
+           FRASES MOTIVACIONALES — tipografía stencil, con halo de
+           aerosol y algún chorreado de pintura.
+           ============================================================ -->
+      <g font-family="'Barlow Condensed', sans-serif" font-weight="900" text-anchor="middle">
+        <g transform="translate(830 215) rotate(-5)">
+          <text font-size="86" fill="#FF3D00" filter="url(#sprayHalo)" opacity="0.55">EARN IT</text>
+          <text font-size="86" fill="#FF3D00" stroke="rgba(10,10,11,0.6)" stroke-width="2.5">EARN IT</text>
+          <rect x="-14" y="18" width="6" height="26" rx="3" fill="#FF3D00"/>
+          <rect x="52" y="16" width="6" height="20" rx="3" fill="#FF3D00"/>
+        </g>
+        <g transform="translate(620 810) rotate(4)">
+          <text font-size="72" fill="#FFD600" filter="url(#sprayHalo)" opacity="0.55">BEAST MODE</text>
+          <text font-size="72" fill="#FFD600" stroke="rgba(10,10,11,0.6)" stroke-width="2.2">BEAST MODE</text>
+          <rect x="-40" y="14" width="6" height="24" rx="3" fill="#FFD600"/>
+          <rect x="88" y="12" width="6" height="18" rx="3" fill="#FFD600"/>
+        </g>
+        <g transform="translate(560 1500) rotate(-3)">
+          <text font-size="64" fill="#00897B" filter="url(#sprayHalo)" opacity="0.55">NO PAIN NO GAIN</text>
+          <text font-size="64" fill="#00897B" stroke="rgba(10,10,11,0.6)" stroke-width="2">NO PAIN NO GAIN</text>
+          <rect x="-30" y="12" width="6" height="22" rx="3" fill="#00897B"/>
+        </g>
       </g>
     </svg>
   </div>
@@ -757,7 +749,6 @@
     </div>
     <span class="sticky-bar-text">COACH<span>&nbsp;JP</span></span>
   </div>
-  <span class="nav-badge" id="nav-badge-level-sticky">Cargando…</span>
 </div>
 <section class="hero">
   <p class="hero-eyebrow">Performance Hub — Atleta: <span id="student-name-text">Cargando…</span></p>
@@ -922,7 +913,6 @@ const ATHLETE_CONFIG = {
 document.getElementById('student-name-text').textContent = ATHLETE_CONFIG.name;
 document.getElementById('student-objective-text').textContent = ATHLETE_CONFIG.objective;
 document.getElementById('nav-badge-level').textContent = ATHLETE_CONFIG.levelBadge;
-document.getElementById('nav-badge-level-sticky').textContent = ATHLETE_CONFIG.levelBadge;
 document.getElementById('student-injury-text').textContent = ATHLETE_CONFIG.specialCare;
 /* ============================================================
    DATOS DE LAS SESIONES
