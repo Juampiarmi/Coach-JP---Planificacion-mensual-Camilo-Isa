@@ -74,21 +74,10 @@
     animation: lightFlare 7s ease-in-out infinite;
   }
   @keyframes lightFlare { 0%, 100% { opacity: 0.82; } 50% { opacity: 1; } }
-  .layer-chalk { overflow: visible; }
-  .chalk-speck {
-    position: absolute; border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.9), rgba(255,255,255,0) 72%);
-    filter: blur(0.4px);
-    animation: chalkDrift linear infinite;
-  }
-  @keyframes chalkDrift {
-    0% { transform: translate(0,0); opacity: 0; }
-    8% { opacity: var(--speck-op, 0.5); }
-    92% { opacity: var(--speck-op, 0.5); }
-    100% { transform: translate(var(--drift-x, 20px), var(--drift-y, -160px)); opacity: 0; }
-  }
+  .layer-storm { width: 100%; height: 100%; display: block; mix-blend-mode: screen; }
   @media (prefers-reduced-motion: reduce) {
-    .layer-lights, .chalk-speck { animation: none !important; }
+    .layer-lights { animation: none !important; }
+    .layer-storm { display: none; }
   }
   .app-frame { position: fixed; inset: 0; z-index: 500; pointer-events: none; }
   .app-frame-edge {
@@ -645,7 +634,7 @@
 <body>
 <div class="steel-vault-bg" aria-hidden="true">
   <div class="ambient-layer layer-lights"></div>
-  <div class="ambient-layer layer-chalk" id="chalkLayer"></div>
+  <canvas class="ambient-layer layer-storm" id="stormCanvas" aria-hidden="true"></canvas>
 </div>
 <div class="app-frame" aria-hidden="true">
   <div class="app-frame-edge top"></div>
@@ -1810,27 +1799,156 @@ window.addEventListener('scroll', function(){
   stickyBarEl.classList.toggle('show', window.scrollY > 260);
 }, { passive: true });
 /* =========================================================
-   CHALK LAYER (ambient decoration, ligero)
+   ELECTRIC STORM (decoración ambiental, tormenta lejana sutil)
 ========================================================= */
-(function buildChalkLayer(){
-  const layer = document.getElementById('chalkLayer');
-  if(!layer) return;
-  const count = 10;
-  for(let i=0;i<count;i++){
-    const s = document.createElement('div');
-    s.className = 'chalk-speck';
-    const size = 2 + Math.random()*3;
-    s.style.width = size + 'px';
-    s.style.height = size + 'px';
-    s.style.left = (Math.random()*100) + '%';
-    s.style.top = (60 + Math.random()*30) + '%';
-    s.style.setProperty('--drift-x', (Math.random()*40-20) + 'px');
-    s.style.setProperty('--drift-y', (-140 - Math.random()*80) + 'px');
-    s.style.setProperty('--speck-op', (0.25 + Math.random()*0.3).toFixed(2));
-    s.style.animationDuration = (6 + Math.random()*6) + 's';
-    s.style.animationDelay = (Math.random()*6) + 's';
-    layer.appendChild(s);
+(function buildElectricStorm(){
+  const canvas = document.getElementById('stormCanvas');
+  if(!canvas) return;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion) return;
+  const ctx = canvas.getContext('2d');
+  if(!ctx) return;
+
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let w = 0, h = 0;
+  function resize(){
+    w = canvas.clientWidth || window.innerWidth;
+    h = canvas.clientHeight || window.innerHeight;
+    canvas.width = Math.max(1, Math.round(w * dpr));
+    canvas.height = Math.max(1, Math.round(h * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+  window.addEventListener('orientationchange', resize, { passive: true });
+  // En mobile, la barra del navegador se oculta/aparece al hacer scroll y no siempre dispara
+  // 'resize' a tiempo — visualViewport sí lo detecta de forma confiable.
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', resize, { passive: true });
+  }
+
+  const STORM_COLORS = ['150,190,255', '190,160,255', '225,235,255'];
+
+  // Genera un trazo de rayo quebrado por desplazamiento de punto medio (fractal simple)
+  function buildBolt(x0, y0, x1, y1, displace, iterations){
+    let points = [{ x: x0, y: y0 }, { x: x1, y: y1 }];
+    let amp = displace;
+    for(let iter = 0; iter < iterations; iter++){
+      const next = [points[0]];
+      for(let i = 0; i < points.length - 1; i++){
+        const a = points[i], b = points[i + 1];
+        const mx = (a.x + b.x) / 2 + (Math.random() - 0.5) * amp;
+        const my = (a.y + b.y) / 2 + (Math.random() - 0.5) * amp;
+        next.push({ x: mx, y: my });
+        next.push(b);
+      }
+      points = next;
+      amp *= 0.55;
+    }
+    return points;
+  }
+
+  function branchFrom(bolt){
+    if(bolt.length < 6 || Math.random() > 0.6) return null;
+    const idx = 2 + Math.floor(Math.random() * (bolt.length - 4));
+    const start = bolt[idx];
+    const dir = Math.random() < 0.5 ? -1 : 1;
+    const angle = (0.3 + Math.random() * 0.7) * dir;
+    const length = 36 + Math.random() * 64;
+    const end = { x: start.x + Math.sin(angle) * length, y: start.y + Math.cos(angle) * length };
+    return buildBolt(start.x, start.y, end.x, end.y, 22, 3);
+  }
+
+  function strokeBolt(points, rgb, alpha, lineWidth){
+    if(alpha <= 0) return;
+    ctx.save();
+    ctx.strokeStyle = 'rgba(' + rgb + ',' + alpha + ')';
+    ctx.lineWidth = lineWidth;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.shadowColor = 'rgba(' + rgb + ',' + Math.min(alpha * 1.3, 0.9) + ')';
+    ctx.shadowBlur = 20;
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for(let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  let flashTimer = null, frameTimer = null;
+
+  function runBolt(onDone){
+    // Se recalcula el tamaño real antes de cada rayo — así, si el navegador mobile
+    // ocultó/mostró la barra de direcciones durante el scroll, el rayo siempre
+    // se dibuja contra la altura visible actual y nunca queda "cortado".
+    resize();
+    const originX = w * (0.06 + Math.random() * 0.88);
+    const originY = -8;
+    const reach = 0.14 + Math.random() * 0.8; // cuánto baja el rayo: desde el cielo hasta el final visible de la app
+    const endY = h * reach;
+    const drift = w * (0.14 + reach * 0.22);
+    const endX = originX + (Math.random() - 0.5) * drift;
+    const bolt = buildBolt(originX, originY, endX, endY, 80, 5);
+    const branch = branchFrom(bolt);
+    const secondBranch = reach > 0.4 ? branchFrom(bolt) : null; // los rayos que bajan más suman una segunda ramificación
+    const rgb = STORM_COLORS[Math.floor(Math.random() * STORM_COLORS.length)];
+    const intensity = (0.62 + Math.random() * 0.48) * (1 - reach * 0.14); // más presencia, atenuada apenas en los más largos
+
+    const flicker = [0.92, 0.35, 0.75, 0]; // encendido-apagado breve, como un relámpago real
+    let frame = 0;
+
+    function step(){
+      ctx.clearRect(0, 0, w, h);
+      const alpha = flicker[frame] * intensity * 0.58;
+      if(alpha > 0){
+        strokeBolt(bolt, rgb, alpha, 1.6);
+        if(branch) strokeBolt(branch, rgb, alpha * 0.68, 1.2);
+        if(secondBranch) strokeBolt(secondBranch, rgb, alpha * 0.52, 1.05);
+        ctx.save();
+        const glowY = originY + (endY - originY) * 0.45;
+        const glow = ctx.createRadialGradient(originX, glowY, 8, originX, glowY, w * 0.34);
+        glow.addColorStop(0, 'rgba(' + rgb + ',' + (alpha * 0.19).toFixed(3) + ')');
+        glow.addColorStop(1, 'rgba(' + rgb + ',0)');
+        ctx.fillStyle = glow;
+        ctx.fillRect(0, 0, w, Math.min(h, endY + h * 0.15));
+        ctx.restore();
+      }
+      frame++;
+      if(frame < flicker.length){
+        frameTimer = setTimeout(step, 65 + Math.random() * 40);
+      } else {
+        ctx.clearRect(0, 0, w, h);
+        if(onDone) onDone();
+      }
+    }
+    step();
+  }
+
+  function flash(){
+    runBolt(function(){
+      if(Math.random() < 0.4){
+        // un segundo rayo casi inmediato, como suele pasar en tormentas reales — sutil, no estroboscópico
+        frameTimer = setTimeout(function(){ runBolt(scheduleNext); }, 130 + Math.random() * 150);
+      } else {
+        scheduleNext();
+      }
+    });
+  }
+
+  function scheduleNext(){
+    const delay = 1300 + Math.random() * 2600; // tormenta más notoria en toda la app, siempre elegante — nunca estroboscópica
+    flashTimer = setTimeout(flash, delay);
+  }
+
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden){
+      clearTimeout(flashTimer); clearTimeout(frameTimer);
+    } else if(!flashTimer){
+      scheduleNext();
+    }
+  });
+
+  scheduleNext();
 })();
 /* =========================================================
    INIT
